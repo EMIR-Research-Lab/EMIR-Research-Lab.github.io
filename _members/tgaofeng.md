@@ -1,7 +1,7 @@
 ---
 name: 李高峰
 image: images/gaofengli.png
-affiliation: "百人计划研究员|博士生导师"
+affiliation: 百人计划研究员|博士生导师
 links:
   email: shunlei.li@outlook.com
   twitter: sarahjohnson
