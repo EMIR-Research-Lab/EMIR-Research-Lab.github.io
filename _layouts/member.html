@@ -20,21 +20,31 @@ layout: default
 
 {{ content }}
 
-{% assign aliases = page.aliases | default: page.name | default: page.title | join: "," | split: "," | array_filter %}
+{% assign aliases = page.aliases
+  | default: page.name
+  | default: page.title
+  | join: ","
+  | split: ","
+  | array_filter
+%}
 
-{% assign search_terms = "" %}
-{% for alias in aliases %}{% assign search_terms = search_terms | append: '"' | append: alias | append: '" ' %}{% endfor %}
-{% assign search_url = "research/?search=" | append: search_terms | relative_url | uri_escape %}
+{% capture search -%}
+  research/?search={% for alias in aliases %}"{{ alias }}" {% endfor %}
+{%- endcapture %}
 
 <p class="center">
-  <a href="{{ search_url }}">
+  <a href="{{ search | relative_url | uri_escape }}">
     Search for {{ page.name | default: page.title }}'s papers on the Research page
   </a>
 </p>
 
+{% capture search -%}
+  blog/?search={{ page.name }}
+{%- endcapture %}
+
 <!--
 <p class="center">
-  <a href="{{ "blog/?search=" | append: page.name | relative_url | uri_escape }}">
+  <a href="{{ search | relative_url | uri_escape }}">
     See {{ page.name | default: page.title }}'s posts on the Blog page
   </a>
 </p>

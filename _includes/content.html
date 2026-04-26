@@ -1,21 +1,27 @@
+<!--
+  modify main content of page:
+  - add section breaks
+  - attach section properties
+  - filter out blank sections
+-->
+
 {% assign content = include.content %}
 
-{% assign sections = content | split: "" | array_filter %}
+{% assign sections = content | split: "<!-- section break -->" | array_filter %}
 
 {% for section in sections %}
-  
-  {% assign dark = section | regex_scan: "<dark>(.*?)</dark>" | join: "" | append: "" %}
-  {% if dark contains "<" %}{% assign dark = "" %}{% endif %}
-
-  {% assign image = section | regex_scan: "<background>(.*?)</background>" | join: "" | append: "" %}
-  {% if image contains "<" or image == "" %}
-    {% assign image = nil %}
-  {% endif %}
-
-  {% assign size = section | regex_scan: "<size>(.*?)</size>" | join: "" | append: "" %}
-  {% if size contains "<" or size == "" %}
-    {% assign size = "page" %}
-  {% endif %}
+  {% assign dark = section
+    | regex_scan: "<dark>(.*?)</dark>"
+    | default: ""
+  %}
+  {% assign image = section
+    | regex_scan: "<background>(.*?)</background>"
+    | default: nil
+  %}
+  {% assign size = section
+    | regex_scan: "<size>(.*?)</size>"
+    | default: "page"
+  %}
 
   <section
     class="background"

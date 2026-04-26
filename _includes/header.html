@@ -41,7 +41,10 @@
   <input class="nav-toggle" type="checkbox" aria-label="show/hide nav">
 
   <nav>
-    {% assign pages = site.pages | where_exp: "page", "page.nav" | sort: "nav.order" %}
+    {% assign pages = site.pages
+      | where_exp: "page", "page.nav"
+      | sort: "nav.order"
+    %}
     {% for page in pages %}
       {% if page.nav %}
         <a
